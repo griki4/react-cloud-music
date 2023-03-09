@@ -1,7 +1,14 @@
 import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
-import { AppHeaderWrapper, HeaderLeft } from '@/components/app_header/style'
+import { NavLink } from 'react-router-dom'
+import {
+  AppHeaderWrapper,
+  HeaderLeft,
+  HeaderRight
+} from '@/components/app_header/style'
+
+import { Input } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 
 import headerTitles from '@/assets/data/header_titles.json'
 
@@ -13,7 +20,12 @@ const AppHeader: FC<IProps> = () => {
   //根据类型确定需要返回的元素
   function showItem(item: any) {
     if (item.type === 'path') {
-      return <Link to={item.link}>{item.title}</Link>
+      return (
+        <NavLink to={item.link}>
+          {item.title}
+          <i className="icon sprite_01"></i>
+        </NavLink>
+      )
     } else {
       return (
         <a href={item.link} target="_blank" rel="noreferrer">
@@ -40,11 +52,18 @@ const AppHeader: FC<IProps> = () => {
             })}
           </div>
         </HeaderLeft>
-        {/*<Link to="/discover">发现音乐/</Link>*/}
-        {/*<Link to="/mine">我的音乐/</Link>*/}
-        {/*<Link to="/focus">关注/</Link>*/}
-        {/*<Link to="/download">下载</Link>*/}
+        <HeaderRight>
+          <Input
+            className="search"
+            size="large"
+            placeholder="音乐/视频/电台/用户"
+            prefix={<SearchOutlined />}
+          />
+          <span className="center">创作者中心</span>
+          <span className="login">登录</span>
+        </HeaderRight>
       </div>
+      <div className="divider"></div>
     </AppHeaderWrapper>
   )
 }

@@ -25,7 +25,7 @@ function App() {
       <AppHeader />
       {/*路由加载阶段显示*/}
       <Suspense fallback="loading...">
-        <div className="app">app: {useRoutes(routes)}</div>
+        <div className="app">{useRoutes(routes)}</div>
       </Suspense>
       <AppFooter />
       <h2>
