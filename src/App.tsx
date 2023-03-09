@@ -1,9 +1,11 @@
 import React, { Suspense } from 'react'
-import { useRoutes, Link } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import routes from '@/router'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { changeMessage } from '@/store/features/counter'
+import AppHeader from '@/components/app_header'
+import AppFooter from '@/components/app_footer'
 
 function App() {
   const { counter, message } = useAppSelector((state) => {
@@ -15,21 +17,17 @@ function App() {
 
   const dispatch = useAppDispatch()
   function handleMessageChange() {
-    dispatch(changeMessage('hhhhhhhhhh'))
+    dispatch(changeMessage('芜湖 起飞！'))
   }
 
   return (
     <div>
-      <div className="nav">
-        <Link to="/discover">发现音乐/</Link>
-        <Link to="/mine">我的音乐/</Link>
-        <Link to="/focus">关注/</Link>
-        <Link to="/download">下载</Link>
-      </div>
+      <AppHeader />
       {/*路由加载阶段显示*/}
       <Suspense fallback="loading...">
         <div className="app">app: {useRoutes(routes)}</div>
       </Suspense>
+      <AppFooter />
       <h2>
         当前计数：{counter} 信息： {message}
         <button onClick={handleMessageChange}>点击修改信息</button>

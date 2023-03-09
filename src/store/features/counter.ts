@@ -1,13 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+interface IState {
+  counter: number
+  message: string
+}
+
+const initialState: IState = {
+  counter: 100,
+  message: 'Hello Redux'
+}
 
 const counterSlice = createSlice({
   name: 'counter',
-  initialState: {
-    counter: 0,
-    message: 'Hello Redux'
-  },
+  initialState,
   reducers: {
-    changeMessage(state, { payload }) {
+    changeMessage(state, { payload }: PayloadAction<string>) {
       state.message = payload
     }
   }
