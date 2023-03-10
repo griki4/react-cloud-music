@@ -9,7 +9,6 @@ import {
   BannerRight,
   BannerControl
 } from '@/views/discover/c-views/recommend/c-cpns/swiper/style'
-import classNames from 'classnames'
 
 interface IProps {
   children?: ReactNode
