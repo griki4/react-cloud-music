@@ -20,3 +20,9 @@ export function getNewAlbum() {
     url: '/album/newest'
   })
 }
+
+export function getTopRankingData(id: number) {
+  return hyRequest.get({
+    url: `/playlist/detail?id=${id}`
+  })
+}

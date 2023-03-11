@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
   getBanner,
   getHotRecommend,
-  getNewAlbum
+  getNewAlbum,
+  getTopRankingData
 } from '@/views/discover/c-views/recommend/service/recommend'
 
 export const fetchRecommendBannerAction = createAsyncThunk(
@@ -13,6 +14,7 @@ export const fetchRecommendBannerAction = createAsyncThunk(
   }
 )
 
+//获取热门推荐数据
 export const fetchHotRecommendAction = createAsyncThunk(
   'hotRecommend',
   async (args, { dispatch }) => {
@@ -22,6 +24,7 @@ export const fetchHotRecommendAction = createAsyncThunk(
   }
 )
 
+//获取新碟上架数据
 export const fetchNewAlbumAction = createAsyncThunk(
   'album',
   async (args, { dispatch }) => {
@@ -30,16 +33,36 @@ export const fetchNewAlbumAction = createAsyncThunk(
   }
 )
 
+//获取榜单数据
+const rankingIds = [19723756, 3779629, 2884035]
+const promises: Promise<any>[] = []
+export const fetchTopRankingAction = createAsyncThunk(
+  'topRanking',
+  async (args, { dispatch }) => {
+    for (const i of rankingIds) {
+      promises.push(getTopRankingData(i))
+    }
+
+    //保证数据返回时的数据是按固定顺序的
+    Promise.all(promises).then((res) => {
+      const playlists = res.map((item) => item.playlist)
+      dispatch(changeTopRanking(playlists))
+    })
+  }
+)
+
 interface RecommendState {
   banner: any[]
   hotRecommend: any[]
   newAlbum: any[]
+  ranking: any[]
 }
 
 const initialState: RecommendState = {
   banner: [],
   hotRecommend: [],
-  newAlbum: []
+  newAlbum: [],
+  ranking: []
 }
 
 const recommendSlice = createSlice({
@@ -54,6 +77,9 @@ const recommendSlice = createSlice({
     },
     changeNewAlbumAction(state, { payload }) {
       state.newAlbum = payload
+    },
+    changeTopRanking(state, { payload }) {
+      state.ranking = payload
     }
   }
 })
@@ -61,6 +87,7 @@ const recommendSlice = createSlice({
 export const {
   changeBannerAction,
   changeHotRecommendAction,
-  changeNewAlbumAction
+  changeNewAlbumAction,
+  changeTopRanking
 } = recommendSlice.actions
 export default recommendSlice.reducer
