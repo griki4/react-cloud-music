@@ -3,6 +3,8 @@ import type { FC, ReactNode } from 'react'
 import { Carousel } from 'antd'
 import { AlbumWrapper } from '@/views/discover/c-views/recommend/c-cpns/newalbum/style'
 import AreaHeaderV1 from '@/components/area-header-v1'
+import { useAppSelector } from '@/store'
+import NewAlbumItem from '@/components/new-album-item'
 
 interface IProps {
   children?: ReactNode
@@ -10,6 +12,11 @@ interface IProps {
 
 const NewAlbum: FC<IProps> = () => {
   const bannerRef = useRef<ElementRef<typeof Carousel>>(null)
+  const { newAlbum } = useAppSelector((state) => {
+    return {
+      newAlbum: state.recommend.newAlbum
+    }
+  })
 
   function preClick() {
     bannerRef.current?.prev()
@@ -27,10 +34,23 @@ const NewAlbum: FC<IProps> = () => {
           onClick={preClick}
         ></button>
         <div className="banner">
-          <Carousel ref={bannerRef} speed={1000}>
-            {[1, 2].map((item) => (
-              <div key={item}>{item}</div>
-            ))}
+          <Carousel ref={bannerRef} speed={1000} dots={false}>
+            {[0, 1].map((item) => {
+              return (
+                <div key={item}>
+                  <div className="album-list">
+                    {newAlbum.slice(item * 5, (item + 1) * 5).map((album) => {
+                      return (
+                        <NewAlbumItem
+                          key={album.id}
+                          album={album}
+                        ></NewAlbumItem>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
           </Carousel>
         </div>
         <button
