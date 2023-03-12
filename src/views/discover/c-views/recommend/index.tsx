@@ -5,6 +5,7 @@ import {
   fetchHotRecommendAction,
   fetchNewAlbumAction,
   fetchRecommendBannerAction,
+  fetchSettleArtistAction,
   fetchTopRankingAction
 } from '@/views/discover/c-views/recommend/store/recommend'
 
@@ -13,6 +14,9 @@ import { RecommendWrapper } from '@/views/discover/c-views/recommend/style'
 import HotRecommend from '@/views/discover/c-views/recommend/c-cpns/hot-recommend'
 import NewAlbum from '@/views/discover/c-views/recommend/c-cpns/newalbum'
 import TopRanking from '@/views/discover/c-views/recommend/c-cpns/top-ranking'
+import UserLogin from '@/views/discover/c-views/recommend/c-cpns/user-login'
+import SettleSinger from '@/views/discover/c-views/recommend/c-cpns/settle-singers'
+import HotAnchors from '@/views/discover/c-views/recommend/c-cpns/hot-anchors'
 
 interface IProps {
   children?: ReactNode
@@ -26,6 +30,7 @@ const Recommend: FC<IProps> = () => {
     dispatch(fetchHotRecommendAction())
     dispatch(fetchNewAlbumAction())
     dispatch(fetchTopRankingAction())
+    dispatch(fetchSettleArtistAction())
   }, [])
 
   return (
@@ -37,7 +42,11 @@ const Recommend: FC<IProps> = () => {
           <NewAlbum />
           <TopRanking />
         </div>
-        <div className="rightSection">right</div>
+        <div className="rightSection">
+          <UserLogin />
+          <SettleSinger />
+          <HotAnchors />
+        </div>
       </div>
     </RecommendWrapper>
   )

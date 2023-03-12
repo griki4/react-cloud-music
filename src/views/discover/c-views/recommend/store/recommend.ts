@@ -3,7 +3,8 @@ import {
   getBanner,
   getHotRecommend,
   getNewAlbum,
-  getTopRankingData
+  getTopRankingData,
+  getSettleArtist
 } from '@/views/discover/c-views/recommend/service/recommend'
 
 export const fetchRecommendBannerAction = createAsyncThunk(
@@ -51,18 +52,28 @@ export const fetchTopRankingAction = createAsyncThunk(
   }
 )
 
+export const fetchSettleArtistAction = createAsyncThunk(
+  'settleArtist',
+  async (args, { dispatch }) => {
+    const res = await getSettleArtist(5)
+    dispatch(changeSettleArtist(res.artists))
+  }
+)
+
 interface RecommendState {
   banner: any[]
   hotRecommend: any[]
   newAlbum: any[]
   ranking: any[]
+  settleArtist: any[]
 }
 
 const initialState: RecommendState = {
   banner: [],
   hotRecommend: [],
   newAlbum: [],
-  ranking: []
+  ranking: [],
+  settleArtist: []
 }
 
 const recommendSlice = createSlice({
@@ -80,6 +91,9 @@ const recommendSlice = createSlice({
     },
     changeTopRanking(state, { payload }) {
       state.ranking = payload
+    },
+    changeSettleArtist(state, { payload }) {
+      state.settleArtist = payload
     }
   }
 })
@@ -88,6 +102,7 @@ export const {
   changeBannerAction,
   changeHotRecommendAction,
   changeNewAlbumAction,
-  changeTopRanking
+  changeTopRanking,
+  changeSettleArtist
 } = recommendSlice.actions
 export default recommendSlice.reducer

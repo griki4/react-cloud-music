@@ -5,6 +5,7 @@ import { AlbumWrapper } from '@/views/discover/c-views/recommend/c-cpns/newalbum
 import AreaHeaderV1 from '@/components/area-header-v1'
 import { useAppSelector } from '@/store'
 import NewAlbumItem from '@/components/new-album-item'
+import { shallowEqual } from 'react-redux'
 
 interface IProps {
   children?: ReactNode
@@ -16,7 +17,7 @@ const NewAlbum: FC<IProps> = () => {
     return {
       newAlbum: state.recommend.newAlbum
     }
-  })
+  }, shallowEqual)
 
   function preClick() {
     bannerRef.current?.prev()

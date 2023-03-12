@@ -26,3 +26,12 @@ export function getTopRankingData(id: number) {
     url: `/playlist/detail?id=${id}`
   })
 }
+
+export function getSettleArtist(limit = 30) {
+  return hyRequest.get({
+    url: '/artist/list',
+    params: {
+      limit
+    }
+  })
+}

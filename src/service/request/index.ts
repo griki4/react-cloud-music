@@ -13,6 +13,7 @@ interface HYRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
 }
 
 class HYRequest {
+  //类中的变量不允许直接定义，需要先声明
   instance: AxiosInstance
 
   constructor(config: HYRequestConfig) {
